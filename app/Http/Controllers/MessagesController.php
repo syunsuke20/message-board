@@ -20,6 +20,7 @@ class MessagesController extends Controller
         ]);
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -27,13 +28,12 @@ class MessagesController extends Controller
      */
      // getでmessages/createにアクセスされた場合の「新規登録画面表示処理」
     public function create()
-    {
-        //
+        {
+        $message = new Message;
+
         // メッセージ作成ビューを表示
-    $message= new Message;
-    
-    return view('message.create',[
-        'message' =>$message,
+        return view('messages.create', [
+            'message' => $message,
         ]);
     }
 
@@ -44,13 +44,13 @@ class MessagesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+      {
+        // メッセージを作成
         $message = new Message;
         $message->content = $request->content;
         $message->save();
-        
-         // トップページへリダイレクトさせる
+
+        // トップページへリダイレクトさせる
         return redirect('/');
     }
 
@@ -62,12 +62,13 @@ class MessagesController extends Controller
      */
     public function show($id)
     {
-        //
-        $message= Message::findOrFail($id);
-        
-        return view('message.show',[
+   // idの値でメッセージを検索して取得
+        $message = Message::findOrFail($id);
+
+        // メッセージ詳細ビューでそれを表示
+        return view('messages.show', [
             'message' => $message,
-            ]);
+        ]);
     }
 
     /**
@@ -78,12 +79,13 @@ class MessagesController extends Controller
      */
     public function edit($id)
     {
-        //
-        $message - Message::findOrFail($id);
-        
-        return view('message.edit',[
-            'message =>$message',
-            ]);
+        // idの値でメッセージを検索して取得
+        $message = Message::findOrFail($id);
+
+        // メッセージ編集ビューでそれを表示
+        return view('messages.edit', [
+            'message' => $message,
+        ]);
     }
 
     /**
@@ -95,13 +97,12 @@ class MessagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-          // idの値でメッセージを検索して取得
+             // idの値でメッセージを検索して取得
         $message = Message::findOrFail($id);
         // メッセージを更新
         $message->content = $request->content;
         $message->save();
-        
+
         // トップページへリダイレクトさせる
         return redirect('/');
     }
@@ -114,11 +115,12 @@ class MessagesController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $message = Message::findOrFind($id);
-        
+        // idの値でメッセージを検索して取得
+        $message = Message::findOrFail($id);
+        // メッセージを削除
         $message->delete();
-        
+
+        // トップページへリダイレクトさせる
         return redirect('/');
     }
 }
