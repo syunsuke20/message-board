@@ -12,7 +12,7 @@ class MessagesController extends Controller
     public function index()
     {
         // メッセージ一覧を取得
-        $messages = Message::orderBy('id','desc')->paginate(25);
+        $messages = Message::all();
 
         // メッセージ一覧ビューでそれを表示
         return view('messages.index', [
@@ -105,7 +105,6 @@ class MessagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-    
         
         // バリデーション
         $request->validate([
@@ -119,7 +118,7 @@ class MessagesController extends Controller
         $message->title = $request->title; 
         $message->content = $request->content;
         $message->save();
-      
+
         // トップページへリダイレクトさせる
         return redirect('/');
     }
